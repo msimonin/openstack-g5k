@@ -26,8 +26,8 @@ $) ./deploy.sh
 After the deployment some manual steps are still required. Of course they need to be integrated in the automatic deployer.
 Feel free to code them and send a pull request :
 
-- [] sets qemu as virtualization technology on the compute node (edit ```/etc/nova/nova.conf``` and ```/etc/nova/nova-compute.conf```)
-- [] restart neutron-server on the controller node (something is wrong with tenant network otherwise)
+- [ ] sets qemu as virtualization technology on the compute node (edit ```/etc/nova/nova.conf``` and ```/etc/nova/nova-compute.conf```)
+- [ ] restart neutron-server on the controller node (something is wrong with tenant network otherwise)
 
 
 
