@@ -14,7 +14,7 @@ Once ready, this script will deprecate https://github.com/capi5k/capi5k-openstac
 ### Requirements
 
 * r10k gem, to install all the module dependencies (```gem install r10k```)
-* vagrant, [download it](http://www.vagrantup.com/downloads.html)
+* [vagrant](http://www.vagrantup.com/downloads.html)
 * the [```hostmanager```](https://github.com/smdahlen/vagrant-hostmanager) plugin for vagrant
 
 ### Deploy
