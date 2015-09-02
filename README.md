@@ -2,8 +2,12 @@
 
 # Introduction
 
-We aim to provide methods to deploy Openstack on your local machine (using Vagrant) and on Grid'5000.
-We sit on top of the following puppet module : https://github.com/puppetlabs/puppetlabs-openstack
+The project aims to deploy openstack either on 
+
+* your local machine (using vagrant)
+* on Grid'5000
+
+Once ready, this script will deprecate https://github.com/capi5k/capi5k-openstack which was based on the Icehouse version of Openstack and using the legacy nova-network. 
 
 ## Deploy on your local machine
 
