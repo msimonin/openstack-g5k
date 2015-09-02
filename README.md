@@ -15,7 +15,7 @@ We sit on top of the following puppet module : https://github.com/puppetlabs/pup
 
 ### Deploy
 
-Tested on 
+Tested on (feel free to add your own configuration)
 * MacOsX / Virtualbox 4.3.10 / Vagrant 1.7.2 
 
 Just launch : 
