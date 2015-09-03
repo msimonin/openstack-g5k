@@ -9,7 +9,7 @@ openstack::network::data: '172.16.44.0/24'
 openstack::network::external::ippool::start: 192.168.22.100
 openstack::network::external::ippool::end: 192.168.22.200
 openstack::network::external::gateway: 192.168.22.254
-openstack::network::external::dns: 192.168.22.254
+openstack::network::external::dns: 10.0.2.3
 
 ######## Private Neutron Network
 

@@ -6,4 +6,5 @@
 ./20_setup_nodes.sh
 ./30_deploy_control.sh 
 ./41_deploy_network.sh
-./42_deploy_nodes.sh
+./42_deploy_compute.sh
+./43_deploy_router.sh

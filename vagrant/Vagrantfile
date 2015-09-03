@@ -87,6 +87,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
 
     compute.vm.provision "shell", path: "install_puppet.sh"
-
   end
+
+  config.vm.define "router" do |router|
+    router.vm.network :private_network, ip: "192.168.22.254"
+    router.vm.hostname = "router.localdomain"
+    router.vm.provision "shell", path: "install_router.sh"
+  end
+
 end
