@@ -1,0 +1,38 @@
+## OAR jobs defaults
+# jobname and cluster are optional
+jobname         'openstack'
+site            'rennes'
+cluster         'parapluie'
+walltime        '2:00:00'
+
+## number of nodes given to OpenStack
+# should be at least 3
+# 2 of them are use by different services
+# 1+ will be used for compute nodes
+nodes           4
+
+## vlantype values:
+# "kavlan"        - routed local vlan
+# "kavlan-global" - global vlan
+vlantype        'kavlan'
+
+
+# capistrano parameters
+# public key will be put on deployed nodes to allow passwordless connections.
+public_key    File.join(ENV["HOME"], ".ssh", "id_rsa.pub")
+# sets the gateway in case of deployment from ouside grid'5000
+gateway      "#{self[:user]}@access.grid5000.fr"
+# set the private key to use
+private_key   File.join(ENV["HOME"], ".ssh", "id_rsa")
+
+# list of images to add to glance
+# they will be downloaded using wget from :url and save under :name
+# the name in glance will be :name as well.
+images [{
+  :name  => "ubuntu-13.10",
+  :url   => "http://public.rennes.grid5000.fr/~msimonin/ubuntu-13.10-server-clouding-amd64-disk1.img"
+  },
+  {
+  :name  => "ubuntu-hadoop-1.2.1",
+  :url   => "http://public.rennes.grid5000.fr/~msimonin/sahara-icehouse-vanilla-1.2.1-ubuntu-13.10.qcow2"
+  }]
