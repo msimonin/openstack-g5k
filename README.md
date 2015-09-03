@@ -38,7 +38,7 @@ Feel free to code them and send a pull request :
 ### TODO 
 
 - [ ] Add a machine to act as a NAT to the internet
-- [ ] Fully automate the deployment (see above)
+- [x] Fully automate the deployment (see above)
 
 ### (minimal) notes and known issues
 
