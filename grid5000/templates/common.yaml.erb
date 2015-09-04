@@ -3,10 +3,10 @@ openstack::region: 'openstack'
 ######## Networks
 # production  network is /20
 # non routed kavlan is /20
-openstack::network::api: "%{::network_eth0}/20"
-openstack::network::external: "%{::network_eth0}/20"
-openstack::network::management: "%{::network_eth1}/20"
-openstack::network::data: "%{::network_eth1}/20"
+openstack::network::api: "<%= @apiNetwork %>"
+openstack::network::external: "<%= @externalNetwork %>"
+openstack::network::management: "<%= @managementNetwork %>"
+openstack::network::data: "<%= @dataNetwork %>"
 
 openstack::network::external::ippool::start: <%= @ipstart %>
 openstack::network::external::ippool::end: <%= @ipend %>

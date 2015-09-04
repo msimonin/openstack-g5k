@@ -50,7 +50,7 @@ $myxp.define_job({
 $myxp.define_deployment({
   :site           => XP5K::Config[:site],
   :environment    => "ubuntu-x64-1404",
-  :roles          => %w(puppet controller network compute),
+  :roles          => %w(puppet controller network compute router),
   :key            => File.read(XP5K::Config[:ssh_public]), 
 })
 

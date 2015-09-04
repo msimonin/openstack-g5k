@@ -1,4 +1,5 @@
 require 'netaddr'
+require 'ipaddr'
 require 'hiera'
 require 'yaml'
 
@@ -8,6 +9,10 @@ load "#{openstack_path}/roles.rb"
 load "#{openstack_path}/output.rb"
 
 set :user, "root"
+
+def clean(s) 
+  return s.gsub("\n", "")
+end
 
 
 # return the hash map credentials
@@ -35,8 +40,15 @@ def proxy
     "https_proxy" => "http://proxy:3128",
     "no_proxy" => "localhost,127.0.0.0/8,127.0.1.1,127.0.1.1*,local.home"
   }
-
 end
+def noproxy 
+  return {
+    "http_proxy" => "",
+    "https_proxy" => "",
+  }
+end
+
+
 
 namespace :setup do
 
@@ -208,11 +220,21 @@ namespace :openstack do
         puts "gateway : " + @gateway
         puts "DNS     : " + @dns
     end
-    
     task :template do
       set :user, "root"
       # get controller address
       controller = (find_servers :roles => [:controller]).first
+      apiNet = clean(capture "facter network_eth0", :hosts => controller)
+      apiNetmask = clean(capture "facter netmask_eth0", :hosts => controller)
+      # compute the cidr notation (add a custom fact ?)
+      apiCidr = IPAddr.new(apiNetmask).to_i.to_s(2).count("1")
+      managementNet = clean(capture "facter network_eth1", :hosts => controller)
+      managementNetmask = clean(capture "facter netmask_eth1", :hosts => controller)
+      managementCidr = IPAddr.new(managementNetmask).to_i.to_s(2).count("1")
+      @apiNetwork = "#{apiNet}/#{apiCidr}"
+      @managementNetwork = "#{managementNet}/#{managementCidr}"
+      @externalNetwork = @apiNetwork
+      @dataNetwork = @managementNetwork
       @controllerAddressApi = capture "facter ipaddress_eth0", :hosts => controller
       @controllerAddressManagement = capture "facter ipaddress_eth1", :hosts => controller
       @controllerAddressManagement = @controllerAddressManagement.gsub("\n", "")
@@ -247,7 +269,7 @@ namespace :openstack do
   end # hiera
 
   namespace :sitepp do
-  
+    # Matt : replace the generation with a template (more flexible)
     desc 'Generate and upload the site.pp'
     task :default do
       generate
@@ -298,13 +320,11 @@ node '#{n}' {
     desc "Launch puppet runs on nodes"
     task :default do
       controller
-      others
-      network::default
+      network
     end
 
     desc 'Provision the controller'
     task :controller, :roles => [:controller] do
-      set :user, "root"
       set :default_environment, proxy
       # it seems that using, :on_error => :continue fails on the following tasks
       # no server for ... we force to true
@@ -312,39 +332,21 @@ node '#{n}' {
     end
 
     desc 'Provision the other nodes'
-    task :others, :roles => [:compute], :max_hosts => 20 do
-      set :user, "root"
-      run "sleep $(( RANDOM%120 + 1 )) && puppet agent -t || true"
+    task :network, :roles => [:network] do
+      set :default_environment, noproxy
+      # force the creation of the bridge
+      run "apt-get install -y openvswitch-switch"
+      run "ovs-vsctl add-br brex && ovs-vsctl add-port brex eth0 && ifconfig eth0 0.0.0.0 && dhclient -nw brex"
+      run "puppet agent -t || true"
+    end
+
+    desc 'Provision the other nodes'
+    task :compute, :roles => [:compute] do
+      set :default_environment, noproxy
+      # force the creation of the bridge
+      run "puppet agent -t || true"
     end
   
-    namespace :network do
-      desc 'Install the legacy network'
-      task :default do
-        network_manifest
-        network_apply
-      end
-
-      desc 'Path compute site.pp with legacy network recipe'
-      task :network_manifest, :roles => [:puppet_master] do
-        set :user, "root"
-        run "cp /etc/puppet/manifests/site.pp /etc/puppet/manifests/site.pp.old"
-        run "cp /etc/puppet/manifests/site_ntx.pp /etc/puppet/manifests/site.pp"
-      end
-
-      task :network_apply, :roles => [:compute] do
-        set :user, "root"
-        run "sleep $(( RANDOM%120 + 1 )) && puppet agent -t || true"
-      end
-
-      desc "Restart compute services (network/compute/cert/api-metadat)"
-      task :restart_services, :roles => [:compute], :on_error => :continue do
-        set :user, "root"
-        run "service nova-compute restart"
-        run "service nova-network restart"
-        run "service nova-api-metadata restart"
-        run "service nova-cert restart"
-      end
-    end
   end
 
   namespace :bootstrap do
