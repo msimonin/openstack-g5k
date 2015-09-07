@@ -48,6 +48,9 @@ def noproxy
   }
 end
 
+task :automatic do
+  puts "Openstack deployment"
+end
 
 
 namespace :setup do
@@ -210,7 +213,13 @@ namespace :openstack do
         jobid = $myxp.job_with_name("#{XP5K::Config['jobname']}")['uid']
         puts frontend
         subnet = (capture "g5k-subnets -j 721111 -a", :hosts => frontend).split("\t")
+        # output example : 
+        #     0                1             2            3              4                5                     6
+        # 10.158.4.0/22  10.159.255.255  255.252.0.0 10.159.255.254  10.156.0.0  dns.rennes.grid5000.fr  172.16.111.118
         cidr =  NetAddr::CIDR.create(subnet[0])
+        # we use the glbal /14 network provided by g5K,
+        # we just make sure to assign ip in the right range.
+        @externalNetwork =  "#{subnet[4]}/14"
         @gateway = subnet[3]
         @dns=subnet[-1]
         @ipstart = cidr.first
@@ -233,7 +242,6 @@ namespace :openstack do
       managementCidr = IPAddr.new(managementNetmask).to_i.to_s(2).count("1")
       @apiNetwork = "#{apiNet}/#{apiCidr}"
       @managementNetwork = "#{managementNet}/#{managementCidr}"
-      @externalNetwork = @apiNetwork
       @dataNetwork = @managementNetwork
       @controllerAddressApi = capture "facter ipaddress_eth0", :hosts => controller
       @controllerAddressManagement = capture "facter ipaddress_eth1", :hosts => controller
