@@ -61,3 +61,75 @@ N.B: The eth2 corresponding virtual box interface is configured to be in ```prom
 seems to not work with the predefined private network, create another one seems to fix the issue.
 
 ## Deploy on Grid'5000
+
+### From inside Grid'5000
+
+* Connect to the frontend of your choice
+
+* Configure [restfully](https://github.com/crohr/restfully)
+
+```
+mkdir ~/.restfully
+echo "base_uri: https://api.grid5000.fr/3.0/" > ~/.restfully/api.grid5000.fr.yml
+```
+
+* Enable proxy
+
+```
+export http_proxy=http://proxy:3128
+export https_proxy=http://proxy:3128
+```
+
+* Install bundler and make ruby executables available
+
+```
+gem install bundler --user
+export PATH=$PATH:$HOME/.gem/ruby/1.9.1/bin
+```
+
+* Download the latest bundle release tarball (```capi5k-openstack-x.y.z-bundle.tar.gz```)
+from the [releases page](https://github.com/capi5k/capi5k-openstack/releases).
+
+```
+cd capi5k-openstack*
+bundle install --path ~/.gem
+```
+
+* Create the ```xp.conf```file from the ```xp.conf.sample```, adapt it to your needs.
+
+> Comment the ```gateway``` line
+
+### From oustside Grid'5000
+
+* Configure  [restfully](https://github.com/crohr/restfully)
+
+```
+echo '
+uri: https://api.grid5000.fr/3.0/
+username: MYLOGIN
+password: MYPASSWORD
+' > ~/.restfully/api.grid5000.fr.yml && chmod 600 ~/.restfully/api.grid5000.fr.yml
+```
+
+* (optional but highly recommended) Install [rvm](http://rvm.io)
+
+* Download the latest bundle release tarball (```capi5k-openstack-x.y.z-bundle.tar.gz```)
+from the [releases page](https://github.com/capi5k/capi5k-openstack/releases).
+
+```
+cd capi5k-openstack*
+bundle install --path ~/.gem
+```
+
+* Create the ```xp.conf```file from the ```xp.conf.sample```, adapt it to your needs.
+
+
+### Configure and launch the deployment
+
+* Launch the deployment :
+
+```
+cap automatic
+```
+
+> The above is a shortcut for cap submit deploy setup openstack
