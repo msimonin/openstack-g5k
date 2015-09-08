@@ -171,6 +171,7 @@ namespace :openstack do
     mod::default
     hiera::default
     sitepp::default
+    run_agents::default
   end
 
 
@@ -329,6 +330,7 @@ node '#{n}' {
     task :default do
       controller
       network
+      compute
     end
 
     desc 'Provision the controller'

@@ -20,10 +20,10 @@ openstack::network::neutron::private: '10.1.0.0/24'
 
 ######## Fixed IPs (controllers)
 
-openstack::controller::address::api: "172.16.96.14"
-openstack::controller::address::management: "192.168.201.14"
-openstack::storage::address::api: "172.16.96.14"
-openstack::storage::address::management: "192.168.201.14"
+openstack::controller::address::api: "172.16.96.16"
+openstack::controller::address::management: "192.168.201.16"
+openstack::storage::address::api: "172.16.96.16"
+openstack::storage::address::management: "192.168.201.16"
 
 ######## Database
 
@@ -39,7 +39,7 @@ openstack::mysql::cinder::pass: 'fuva-wax'
 
 openstack::mysql::glance::user: 'glance'
 openstack::mysql::glance::pass: 'fuva-wax'
-openstack::glance::api_servers: ['192.168.201.14:9292']
+openstack::glance::api_servers: ['192.168.201.16:9292']
 
 openstack::mysql::nova::user: 'nova'
 openstack::mysql::nova::pass: 'fuva-wax'
@@ -54,7 +54,7 @@ openstack::mysql::heat::pass: 'fuva-wax'
 
 openstack::rabbitmq::user: 'openstack'
 openstack::rabbitmq::password: 'pose-vix'
-openstack::rabbitmq::hosts: ['192.168.201.14:5672']
+openstack::rabbitmq::hosts: ['192.168.201.16:5672']
 
 ######## Keystone
 
@@ -112,7 +112,7 @@ openstack::neutron::core_plugin: 'ml2'
 openstack::neutron::service_plugins: ['router', 'firewall', 'lbaas', 'vpnaas', 'metering']
 
 ######## Ceilometer
-openstack::ceilometer::address::management: '192.168.201.14'
+openstack::ceilometer::address::management: '192.168.201.16'
 openstack::ceilometer::mongo::username: 'mongo'
 openstack::ceilometer::mongo::password: 'mongosecretkey123'
 openstack::ceilometer::password: 'whi-truz'
