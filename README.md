@@ -32,7 +32,7 @@ Just launch :
 $) ./deploy.sh
 ```
 
-### (minimal) notes and known issues
+### Tests
 
 * [test] network connectivity
 
