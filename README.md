@@ -65,6 +65,9 @@ seems to not work with the predefined private network, create another one seems 
 
 ## Deploy on Grid'5000
 
+For the moment you'll have to use nodes with 2 network interfaces (e.g paravance / parasilo / paranoia).
+See [#12](https://github.com/msimonin/openstack-g5k/issues/12).
+
 ### From inside Grid'5000
 
 * Connect to the frontend of your choice
