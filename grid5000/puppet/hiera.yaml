@@ -5,3 +5,4 @@
   :datadir: /etc/puppet/hiera
 :hierarchy:
   - common
+  - neutron

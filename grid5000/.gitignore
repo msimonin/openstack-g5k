@@ -2,3 +2,5 @@ tmp
 .xp_cache
 xp.conf
 Gemfile.lock
+
+puppet/hiera/common.yaml
