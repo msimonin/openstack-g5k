@@ -212,8 +212,7 @@ namespace :openstack do
     task :subnet  do
         frontend = (find_servers :roles => [:frontend]).first
         jobid = $myxp.job_with_name("#{XP5K::Config['jobname']}")['uid']
-        puts frontend
-        subnet = (capture "g5k-subnets -j 721111 -a", :hosts => frontend).split("\t")
+        subnet = (capture "g5k-subnets -j #{jobid} -a", :hosts => frontend).split("\t")
         # output example : 
         #     0                1             2            3              4                5                     6
         # 10.158.4.0/22  10.159.255.255  255.252.0.0 10.159.255.254  10.156.0.0  dns.rennes.grid5000.fr  172.16.111.118
