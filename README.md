@@ -32,26 +32,6 @@ Just launch :
 $) ./deploy.sh
 ```
 
-### Tests
-
-* [test] network connectivity
-
-The ip of the external gateway should be pingable from anywhere.
-If not check the ```brex```bridge on the network node :
-```
-$)root@network:~# ovs-vsctl list-ports brex
-eth2
-qg-0ccc561c-4c
-```
-
-N.B: The eth2 corresponding virtual box interface is configured to be in ```promisc``` mode (check the virtual box gui). This is setup in the Vagrantfile.
-
-* [test] floating ip
- Floating ips should be pingable and sshable from anywhere.
-
-* [issue] floating ip association
-seems to not work with the predefined private network, create another one seems to fix the issue.
-
 ## Deploy on Grid'5000
 
 For the moment you'll have to use nodes with 2 network interfaces (e.g paravance / parasilo / paranoia).
