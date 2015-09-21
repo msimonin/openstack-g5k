@@ -4,6 +4,7 @@
 
 * master branch -> juno version with neutron
 * nova_network -> juno version with legacy nova network
+* future -> future layout for this repo (standalone scripts)
 
 # Introduction
 
