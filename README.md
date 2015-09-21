@@ -1,7 +1,9 @@
 *Work in progress*
 
-Master branch tracks *juno* version.
+# branching information : 
 
+* master branch -> juno version with neutron
+* nova_network -> juno version with legacy nova network
 
 # Introduction
 
