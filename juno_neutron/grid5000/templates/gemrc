@@ -1,0 +1,5 @@
+http_proxy: http://proxy.rennes.grid5000.fr:3128
+gem: --http-proxy http://proxy.rennes.grid5000.fr:3128 --no-rdoc --no-ri
+:sources:
+- http://rubygems.org/
+- http://gems.grid5000.fr/

@@ -1,0 +1,7 @@
+nova::network::neutron::nova_api_class: "nova.network.api.API"
+nova::network::neutron::security_class: "nova"
+nova::network::neutron::firewall_driver: "nova.virt.libvirt.firewall.IptablesFirewallDriver"
+nova::network::network_size: "254"
+nova::network::private_interface: "eth1" # intervm private network ? 
+nova::network::public_interface: "eth0" # floating ips ? 
+
