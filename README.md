@@ -1,14 +1,13 @@
-*Work in progress*
+# Subdirectories information
 
-# branching information : 
+* ```juno_legacy_network``` : install ```juno``` version using a single flat network and the legacy service nova-network.
+* ```juno_neutron``` : install a full SDN stack (neutron), connectivity through GRE tunnels.
 
-* master branch -> juno version with neutron
-* nova_network -> juno version with legacy nova network
-* future -> future layout for this repo (standalone scripts)
+The common setup is described below :
 
 # Introduction
 
-The project aims to deploy openstack either on 
+Each project aims to deploy openstack either on
 
 * your local machine (using vagrant)
 * on Grid'5000
@@ -17,7 +16,7 @@ It is based on the [puppetlabs/puppet-openstack module](https://github.com/puppe
 
 Once ready, this script will deprecate https://github.com/capi5k/capi5k-openstack which was based on the Icehouse version of Openstack and using the legacy nova-network and a single flat network.
 
-## Deploy on your local machine
+## Deploy on your local machine (```vagrant``` subdirectory)
 
 ### Requirements
 
@@ -28,14 +27,14 @@ Once ready, this script will deprecate https://github.com/capi5k/capi5k-openstac
 ### Deploy
 
 Tested on (feel free to add your own configuration)
-* MacOsX / Virtualbox 4.3.10 / Vagrant 1.7.2 
+* MacOsX / Virtualbox 4.3.10 / Vagrant 1.7.2
 
-Just launch : 
+Just launch :
 ```
 $) ./deploy.sh
 ```
 
-## Deploy on Grid'5000
+## Deploy on Grid'5000 (```grid'5000``` subdirectory)
 
 For the moment you'll have to use nodes with 2 network interfaces (e.g paravance / parasilo / paranoia).
 See [#12](https://github.com/msimonin/openstack-g5k/issues/12).
