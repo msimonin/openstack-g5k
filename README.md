@@ -2,8 +2,22 @@
 
 * ```juno_legacy_network``` : install ```juno``` version using a single flat network and the legacy service nova-network.
 * ```juno_neutron``` : install a full SDN stack (neutron), connectivity through GRE tunnels.
+Performance may be impacted (see [#8](https://github.com/msimonin/openstack-g5k/issues/8))
 
-The common setup is described below :
+Directory layout :
+```
+.
+├── LICENSE
+├── README.md
+├── juno_legacy_network  # legacy network deployment
+│   ├── grid5000            # - grid5000 deployment
+│   ├── openstackg5k        # - specific puppet recipes
+│   └── vagrant             # - vagrant deployment (local to your machine)
+└── juno_neutron         # neutron deployment
+    ├── grid5000
+    ├── openstackg5k  
+    └── vagrant
+```
 
 # Introduction
 
