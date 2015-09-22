@@ -21,16 +21,9 @@ Directory layout :
 
 # Introduction
 
-Each project aims to deploy openstack either on
+The deployments are based on the [puppetlabs/puppet-openstack module](https://github.com/puppetlabs/puppetlabs-openstack).
 
-* your local machine (using vagrant)
-* on Grid'5000
-
-It is based on the [puppetlabs/puppet-openstack module](https://github.com/puppetlabs/puppetlabs-openstack).
-
-Once ready, this script will deprecate https://github.com/capi5k/capi5k-openstack which was based on the Icehouse version of Openstack and using the legacy nova-network and a single flat network.
-
-## Deploy on your local machine (```vagrant``` subdirectory)
+## Deploy on your local machine (```vagrant``` subdirectory - if any)
 
 ### Requirements
 
@@ -48,7 +41,7 @@ Just launch :
 $) ./deploy.sh
 ```
 
-## Deploy on Grid'5000 (```grid'5000``` subdirectory)
+## Deploy on Grid'5000 (```grid'5000``` subdirectory - if any)
 
 For the moment you'll have to use nodes with 2 network interfaces (e.g paravance / parasilo / paranoia).
 See [#12](https://github.com/msimonin/openstack-g5k/issues/12).
@@ -78,10 +71,10 @@ gem install bundler --user
 export PATH=$PATH:$HOME/.gem/ruby/1.9.1/bin
 ```
 
-* Clone the repository.
+* Get or clone the repository.
 
 ```
-cd openstack-g5k
+# inside grid5000 subdirectory
 bundle install --path ~/.gem
 ```
 
@@ -103,17 +96,17 @@ password: MYPASSWORD
 
 * (optional but highly recommended) Install [rvm](http://rvm.io)
 
-* Clone the repository.
+* Get or clone the repository.
 
 ```
-cd openstack-g5k
-bundle install --path ~/.gem
+# inside grid5000 subdirectory
+bundle install
 ```
 
 * Create the ```xp.conf```file from the ```xp.conf.sample```, adapt it to your needs.
 
 
-### Configure and launch the deployment
+### Launch the deployment
 
 * Launch the deployment :
 
@@ -122,3 +115,11 @@ cap automatic
 ```
 
 > The above is a shortcut for cap submit deploy setup openstack
+
+### Bootstrap the installation (if any available)
+... Otherwise you'll have to create one yourself. By bootstraping I mean
+creating initial networks, images ...
+
+```
+cap openstack:bootstrap
+```
