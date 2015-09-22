@@ -380,37 +380,15 @@ node '#{n}' {
     end
 
     task :images, :roles => [:controller] do
-      set :default_environment, rc('test')
+      set :default_environment, rc('test').merge(noproxy)
       set :user, "root"
        XP5K::Config[:images].each do |image|
         run "wget -q #{image[:url]} -O #{image[:name]}"
-        run "glance add name='#{image[:name]}' is_public=true container_format=ovf disk_format=qcow2 < #{image[:name]}"
+        run "glance image-create --name='#{image[:name]}' --is-public=true --container-format=ovf --disk-format=qcow2 < #{image[:name]}"
         run "nova image-list"
       end
     end
 
-    task :network, :roles => [:controller] do
-      set :default_environment, rc('test')
-      set :user, "root"
-      controllerAddress = capture "facter ipaddress"
-
-      # get vlan number using the jobname variable
-      vlan = $myxp.job_with_name("#{XP5K::Config[:jobname]}")['resources_by_type']['vlans'].first.to_i
-      # get corresponding IP and add 30 to the c part to not collide with any host of g5k
-      vlan_config = YAML::load_file("#{openstack_path}/config/vlan-config.yaml")
-      ip=vlan_config["#{XP5K::Config[:site]}"][vlan]
-      cidr =  NetAddr::CIDR.create(ip)
-      splited_ip = cidr.first.split('.')
-      c=(splited_ip[2].to_i+30).to_s
-
-      # we choose a range of ips which doen't collide with any host of g5k 
-      # see https://www.grid5000.fr/mediawiki/index.php/User:Lnussbaum/Network#KaVLAN
-      # here 255 hosts only
-      nova_net = controllerAddress.gsub(/(\d)+\.(\d)+$/, c+".0/24")
-      run "nova network-create net-jdoe --bridge br100 --multi-host T --fixed-range-v4 #{nova_net}"
-      run "nova net-list"
-    end
-    
     task :testrc, :roles => [:controller] do
       set :user, "root"
       rc = rc("test")
@@ -421,7 +399,7 @@ node '#{n}' {
     end
 
     task :admin_ec2, :roles => [:controller] do
-      set :default_environment, rc('test')
+      set :default_environment, rc('test').merge(noproxy)
       set :user, "root"
       # acces and secret key
       run "keystone ec2-credentials-create > admin.ec2"
@@ -429,7 +407,7 @@ node '#{n}' {
     end
 
     task :quotas, :roles => [:controller], :on_error => :continue do
-      set :default_environment, rc('test')
+      set :default_environment, rc('test').merge(noproxy)
       set :user, "root"
       # disable quotas
       run "nova quota-class-update --cores -1 default"
@@ -461,14 +439,14 @@ node '#{n}' {
 
       task :keypair, :roles => [:controller] do
         set :user, "root"
-        set :default_environment, rc('demo')
+        set :default_environment, rc('demo').merge(noproxy)
         run "nova keypair-add --pub_key /root/.ssh/id_rsa.pub jdoe_key"
       end
 
       # we allow all traffic on the default sec group as well
       task :sec_group, :roles => [:controller] do
         set :user, "root"
-        set :default_environment, rc('demo')
+        set :default_environment, rc('demo').merge(noproxy)
         run "nova secgroup-add-rule default tcp 1 65535 0.0.0.0/0"
         run "nova secgroup-add-rule default udp 1 65535 0.0.0.0/0"
         run "nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0"
@@ -482,7 +460,7 @@ node '#{n}' {
 
       task :ec2, :roles => [:controller] do
         set :user, "root"
-        set :default_environment, rc('demo')
+        set :default_environment, rc('demo').merge(noproxy)
         run "keystone ec2-credentials-create > demo.ec2"
         run "cat demo.ec2"
       end
