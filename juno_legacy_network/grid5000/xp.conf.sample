@@ -15,7 +15,6 @@ computes        2
 # "kavlan"        - routed local vlan
 # "kavlan-global" - global vlan
 vlantype        'kavlan'
-management_interface 'eth1'
 
 # capistrano parameters
 # public key will be put on deployed nodes to allow passwordless connections.
