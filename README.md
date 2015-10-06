@@ -43,8 +43,9 @@ $) ./deploy.sh
 
 ## Deploy on Grid'5000 (```grid'5000``` subdirectory - if any)
 
-For the moment you'll have to use nodes with 2 network interfaces (e.g paravance / parasilo / paranoia).
-See [#12](https://github.com/msimonin/openstack-g5k/issues/12).
+
+* ```juno_neutron``` requires 2 network interfaces (e.g paravance / parasilo / paranoia).
+* ```juno_legacy_network``` require only one network interface (thus it should be useable anywhere on grid'5000)
 
 ### From inside Grid'5000
 
