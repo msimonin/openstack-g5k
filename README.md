@@ -124,3 +124,30 @@ creating initial networks, images ...
 ```
 cap openstack:bootstrap
 ```
+
+# Play with Openstack
+
+## Horizon dashboard
+
+* Make a tunnel from your local machine to the horizon dashboard
+
+```bash
+# replace <controller> and <site>
+ssh -NL 8000:<controller>:80 <site>
+```
+
+* Use the VPN 
+
+https://www.grid5000.fr/mediawiki/index.php/VPN
+
+## From the command line 
+
+* Make sure the proxy is unset (services API are http REST)
+
+```bash 
+# unset proxies
+unset http_proxy
+unset https_proxy
+# access nova, neutron, keystone ... services 
+```
+
