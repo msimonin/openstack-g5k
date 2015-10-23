@@ -5,10 +5,10 @@ site            'rennes'
 cluster         'paravance'
 walltime        '4:00:00'
 
-## number of nodes given to OpenStack
-# should be at least 3
-# 2 of them are use by different services
-# 1+ will be used for compute nodes
+## number of compute nodes given to OpenStack
+# in addition to the compute nodes, 2 more are reserved for 
+# the controller and the puppet master
+# be careful to have at least computes + 2 available nodes
 computes        2
 
 ## vlantype values:
