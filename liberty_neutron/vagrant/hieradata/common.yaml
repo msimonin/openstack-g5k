@@ -1,0 +1,183 @@
+openstack::region: 'openstack'
+
+######## Networks
+openstack::network::api: '192.168.11.0/24'
+openstack::network::external: '192.168.22.0/24'
+openstack::networks:
+  public:
+    tenant_name: 'services'
+    provider_network_type: 'gre'
+    router_external: true
+    provider_segmentation_id: 3604
+    shared: true
+  private:
+    tenant_name: 'services'
+    provider_network_type: 'gre'
+    router_external: false
+    provider_segmentation_id: 4063
+    shared: true
+openstack::subnets:
+  '192.168.22.0/24':
+    cidr: '192.168.22.0/24'
+    ip_version: '4'
+    gateway_ip: 192.168.22.2
+    enable_dhcp: false
+    network_name: 'public'
+    tenant_name: 'services'
+    allocation_pools: ['start=192.168.22.100,end=192.168.22.200']
+    dns_nameservers: [192.168.22.2]
+  '10.0.0.0/24':
+    cidr: '10.0.0.0/24'
+    ip_version: '4'
+    enable_dhcp: true
+    network_name: 'private'
+    tenant_name: 'services'
+    dns_nameservers: [192.168.22.2]
+openstack::routers:
+  test:
+    tenant_name: 'test'
+    gateway_network_name: 'public'
+openstack::router_interfaces:
+  'test:10.0.0.0/24': {}
+
+openstack::network::management: '172.16.33.0/24'
+openstack::network::data: '172.16.44.0/24'
+
+######## Fixed IPs (controllers)
+
+openstack::controller::address::api: '192.168.11.4'
+openstack::controller::address::management: '172.16.33.4'
+openstack::storage::address::api: '192.168.11.4'
+openstack::storage::address::management: '172.16.33.4'
+
+######## Database
+
+openstack::mysql::root_password: 'spam-gak'
+openstack::mysql::service_password: 'fuva-wax'
+openstack::mysql::allowed_hosts: ['localhost', '127.0.0.1', '172.16.33.%']
+
+openstack::mysql::keystone::user: 'keystone'
+openstack::mysql::keystone::pass: 'fuva-wax'
+
+openstack::mysql::cinder::user: 'cinder'
+openstack::mysql::cinder::pass: 'fuva-wax'
+
+openstack::mysql::glance::user: 'glance'
+openstack::mysql::glance::pass: 'fuva-wax'
+# MATT controller hosts glance registry as well
+openstack::glance::api_servers: ['172.16.33.4:9292']
+
+openstack::mysql::nova::user: 'nova'
+openstack::mysql::nova::pass: 'fuva-wax'
+
+openstack::mysql::neutron::user: 'neutron'
+openstack::mysql::neutron::pass: 'fuva-wax'
+
+openstack::mysql::heat::user: 'heat'
+openstack::mysql::heat::pass: 'fuva-wax'
+
+######## RabbitMQ
+
+openstack::rabbitmq::user: 'openstack'
+openstack::rabbitmq::password: 'pose-vix'
+openstack::rabbitmq::hosts: ['172.16.33.4:5672']
+
+######## Keystone
+
+openstack::keystone::admin_token: 'sosp-kyl'
+openstack::keystone::admin_email: 'chris.hoge@puppetlabs.com'
+openstack::keystone::admin_password: 'fyby-tet'
+
+openstack::keystone::tenants:
+    "test":
+        description: "Test tenant"
+    "test2":
+        description: "Test tenant"
+
+openstack::keystone::users:
+    "test":
+        password: "abc123"
+        tenant: "test"
+        email: "test@example.com"
+        admin: true
+    "demo":
+        password: "abc123"
+        tenant: "test"
+        email: "demo@example.com"
+        admin: false
+    "demo2":
+        password: "abc123"
+        tenant: "test2"
+        email: "demo@example.com"
+        admin: false
+
+######## Glance
+
+openstack::images:
+  Cirros:
+    container_format: 'bare'
+    disk_format: 'qcow2'
+    source: 'http://download.cirros-cloud.net/0.3.1/cirros-0.3.1-x86_64-disk.img'
+
+openstack::glance::password: 'na-mu-va'
+
+######## Cinder
+
+openstack::cinder::password: 'zi-co-se'
+openstack::cinder::volume_size: '8G'
+
+######## Swift
+
+openstack::swift::password: 'dexc-flo'
+openstack::swift::hash_suffix: 'pop-bang'
+
+######## Nova
+
+openstack::nova::libvirt_type: 'qemu'
+openstack::nova::password: 'quuk-paj'
+
+######## Neutron
+
+openstack::neutron::password: 'whi-rtuz'
+openstack::neutron::shared_secret: 'by-sa-bo'
+openstack::neutron::core_plugin: 'ml2'
+## MATT : removed lbaas and vpnas due to import error on the server side
+openstack::neutron::service_plugins: ['router', 'firewall', 'metering']
+
+######## Ceilometer
+openstack::ceilometer::address::management: '172.16.33.4'
+openstack::ceilometer::mongo::username: 'mongo'
+openstack::ceilometer::mongo::password: 'mongosecretkey123'
+openstack::ceilometer::password: 'whi-truz'
+openstack::ceilometer::meteringsecret: 'ceilometersecretkey'
+
+######## Heat
+openstack::heat::password: 'zap-bang'
+openstack::heat::encryption_key: 'heatsecretkey123'
+
+
+######## Horizon
+
+openstack::horizon::secret_key: 'whu-ghuk'
+
+######## Tempest
+
+openstack::tempest::configure_images    : true
+openstack::tempest::image_name          : 'Cirros'
+openstack::tempest::image_name_alt      : 'Cirros'
+openstack::tempest::username            : 'demo'
+openstack::tempest::username_alt        : 'demo2'
+openstack::tempest::username_admin      : 'test'
+openstack::tempest::configure_network   : true
+openstack::tempest::public_network_name : 'public'
+openstack::tempest::cinder_available    : true
+openstack::tempest::glance_available    : true
+openstack::tempest::horizon_available   : true
+openstack::tempest::nova_available      : true
+openstack::tempest::neutron_available   : true
+openstack::tempest::heat_available      : false
+openstack::tempest::swift_available     : false
+
+######## Log levels
+openstack::verbose: 'True'
+openstack::debug: 'True'
