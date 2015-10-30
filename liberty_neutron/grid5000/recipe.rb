@@ -218,7 +218,7 @@ namespace :openstack do
         # we just make sure to assign ip in the right range.
         @externalNetwork =  "#{subnet[4]}/14"
         @gateway = subnet[3]
-        @dns=subnet[-1]
+        @dns=clean(subnet[-1])
         @ipstart = cidr.first
         @ipend = cidr.last
         puts "First IP: " + @ipstart
@@ -334,6 +334,8 @@ node '#{n}' {
       set :default_environment, proxy
       # it seems that using, :on_error => :continue fails on the following tasks
       # no server for ... we force to true
+      run "apt-get -y install openstack-dashboard"
+      run "apt-get remove -y  openstack-dashboard-ubuntu-theme"
       run "puppet agent -t || true"
     end
 
@@ -363,7 +365,7 @@ node '#{n}' {
       testrc
       admin_ec2
       quotas
-      demo::default
+      #demo::default
       ec2_boot
       nova_boot
     end
@@ -380,7 +382,7 @@ node '#{n}' {
       set :user, "root"
        XP5K::Config[:images].each do |image|
         run "wget -q #{image[:url]} -O #{image[:name]}"
-        run "glance image-create --name='#{image[:name]}' --is-public=true --container-format=ovf --disk-format=qcow2 < #{image[:name]}"
+        run "glance image-create --name='#{image[:name]}' --visibility=public --container-format=ovf --disk-format=qcow2 < #{image[:name]}"
         run "nova image-list"
       end
     end
