@@ -4,6 +4,10 @@ mod "openstack",
   :git => "git://github.com/mmailand/puppetlabs-openstack",
   :ref => "topic-liberty"
 
+mod "sahara",
+  :git => "https://github.com/openstack/puppet-sahara.git",
+  :ref => "master"
+
 ## The core OpenStack modules
 
 mod "keystone",
