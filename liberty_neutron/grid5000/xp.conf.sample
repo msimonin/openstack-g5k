@@ -1,6 +1,6 @@
 ## OAR jobs defaults
 # jobname and cluster are optional
-jobname         'juno-openstack'
+jobname         'liberty-openstack'
 site            'rennes'
 cluster         'paravance'
 walltime        '4:00:00'
@@ -29,10 +29,6 @@ private_key   File.join(ENV["HOME"], ".ssh", "id_rsa")
 # they will be downloaded using wget from :url and save under :name
 # the name in glance will be :name as well.
 images [{
-  :name  => "ubuntu-13.10",
-  :url   => "http://public.rennes.grid5000.fr/~msimonin/ubuntu-13.10-server-clouding-amd64-disk1.img"
-  },
-  {
-  :name  => "ubuntu-hadoop-1.2.1",
-  :url   => "http://public.rennes.grid5000.fr/~msimonin/sahara-icehouse-vanilla-1.2.1-ubuntu-13.10.qcow2"
+  :name  => "cirros",
+  :url   => "http://public.rennes.grid5000.fr/~msimonin/cirros-0.3.4-x86_64-disk.img"
   }]
