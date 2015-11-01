@@ -177,6 +177,7 @@ namespace :openstack do
     task :default do
       prepare
       install
+      patchs
     end
 
     task :prepare, :roles => [:puppet_master] do
@@ -194,6 +195,12 @@ namespace :openstack do
       run "gem install r10k --no-ri --no-rdoc"
       run "cd /etc/puppet && r10k -v info puppetfile install"
       upload "#{openstack_path}/../openstackg5k", "/etc/puppet/modules", :via => :scp, :recursive => :true
+    end
+
+    desc 'Apply patches'
+    task :patchs, :roles => [:puppet_master] do
+      set :user, "root"
+      upload "#{openstack_path}/../patchs/modules", "/etc/puppet/", :via => :scp, :recursive => :true
     end
   end
 
@@ -334,8 +341,6 @@ node '#{n}' {
       set :default_environment, proxy
       # it seems that using, :on_error => :continue fails on the following tasks
       # no server for ... we force to true
-      run "apt-get -y install openstack-dashboard"
-      run "apt-get remove -y  openstack-dashboard-ubuntu-theme"
       run "puppet agent -t || true"
     end
 
