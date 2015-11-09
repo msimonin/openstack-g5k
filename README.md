@@ -43,8 +43,9 @@ $) ./deploy.sh
 
 ## Deploy on Grid'5000 (```grid'5000``` subdirectory - if any)
 
-For the moment you'll have to use nodes with 2 network interfaces (e.g paravance / parasilo / paranoia).
-See [#12](https://github.com/msimonin/openstack-g5k/issues/12).
+
+* ```juno_neutron``` requires 2 network interfaces (e.g paravance / parasilo / paranoia).
+* ```juno_legacy_network``` require only one network interface (thus it should be useable anywhere on grid'5000)
 
 ### From inside Grid'5000
 
@@ -123,3 +124,30 @@ creating initial networks, images ...
 ```
 cap openstack:bootstrap
 ```
+
+# Play with Openstack
+
+## Horizon dashboard
+
+* Make a tunnel from your local machine to the horizon dashboard
+
+```bash
+# replace <controller> and <site>
+ssh -NL 8000:<controller>:80 <site>
+```
+
+* Use the VPN 
+
+https://www.grid5000.fr/mediawiki/index.php/VPN
+
+## From the command line 
+
+* Make sure the proxy is unset (services API are http REST)
+
+```bash 
+# unset proxies
+unset http_proxy
+unset https_proxy
+# access nova, neutron, keystone ... services 
+```
+
