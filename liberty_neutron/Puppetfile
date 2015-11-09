@@ -1,0 +1,155 @@
+mod "openstack",
+  :git => "https://github.com/msimonin/puppetlabs-openstack",
+  :ref => "topic-liberty"
+
+mod "sahara",
+  :git => "https://github.com/openstack/puppet-sahara.git",
+  :ref => "master"
+
+## The core OpenStack modules
+
+mod "keystone",
+  :git => "https://github.com/stackforge/puppet-keystone",
+  :ref => "master"
+
+mod "swift",
+  :git => "https://github.com/stackforge/puppet-swift",
+  :ref => "master"
+
+mod "glance",
+  :git => "https://github.com/stackforge/puppet-glance",
+  :ref => "master"
+
+mod "cinder",
+  :git => "https://github.com/stackforge/puppet-cinder",
+  :ref => "master"
+
+mod "neutron",
+  :git => "https://github.com/stackforge/puppet-neutron",
+  :ref => "master"
+
+mod "nova",
+  :git => "https://github.com/stackforge/puppet-nova",
+  :ref => "master"
+
+mod "heat",
+  :git => "https://github.com/stackforge/puppet-heat",
+  :ref => "master"
+
+mod "ceilometer",
+  :git => "https://github.com/stackforge/puppet-ceilometer",
+  :ref => "master"
+
+mod "horizon",
+  :git => "https://github.com/stackforge/puppet-horizon",
+  :ref => "master"
+
+mod "openstacklib",
+  :git => "https://github.com/stackforge/puppet-openstacklib",
+  :ref => "master"
+
+mod "openstack_extras",
+  :git => "https://github.com/stackforge/puppet-openstack_extras",
+  :ref => "master"
+
+mod "tempest",
+  :git => "https://github.com/stackforge/puppet-tempest",
+  :ref => "master"
+
+mod "vswitch",
+  :git => "https://github.com/stackforge/puppet-vswitch",
+  :ref => "master"
+
+## R10K doesn't handle dependencies, so let's handle them here
+# pointing to as many stable projects as possible
+# TODO automate this dependency list
+
+mod "apache",
+  :git => "https://github.com/puppetlabs/puppetlabs-apache",
+  :ref => "1.2.x"
+
+mod "epel",
+  :git => "https://github.com/stahnma/puppet-module-epel",
+  :ref => "master"
+
+mod "erlang",
+  :git => "https://github.com/garethr/garethr-erlang",
+  :ref => "master"
+
+mod "inifile",
+  :git => "https://github.com/puppetlabs/puppetlabs-inifile",
+  :ref => "1.0.x"
+
+mod "mysql",
+  :git => "https://github.com/puppetlabs/puppetlabs-mysql",
+  :ref => "3.3.x"
+
+mod "stdlib",
+  :git => "https://github.com/puppetlabs/puppetlabs-stdlib",
+  :ref => "4.3.x"
+
+mod "rsync",
+  :git => "https://github.com/puppetlabs/puppetlabs-rsync",
+  :ref => "0.2.0"
+
+mod "xinetd",
+  :git => "https://github.com/puppetlabs/puppetlabs-xinetd",
+  :ref => "1.2.0"
+
+mod "concat",
+  :git => "https://github.com/puppetlabs/puppetlabs-concat",
+  :ref => "1.1.x"
+
+mod "memcached",
+  :git => "https://github.com/saz/puppet-memcached",
+  :ref => "658374848a6d2cf07f0bf714bc34709e9d0ee109"
+
+mod "ssh",
+  :git => "https://github.com/saz/puppet-ssh",
+  :ref => "a0f5d5da20c91775c76c77d3b57b41f4245a260a"
+
+mod "qpid",
+  :git => "https://github.com/dprince/puppet-qpid",
+  :ref => "1.0.2"
+
+mod "sysctl",
+  :git => "https://github.com/duritong/puppet-sysctl"
+
+mod "rabbitmq",
+  :git => "https://github.com/puppetlabs/puppetlabs-rabbitmq",
+  :ref => "5.2.0"
+
+mod "staging",
+  :git => "https://github.com/nanliu/puppet-staging",
+  :ref => "1.0.2"
+
+mod "vcsrepo",
+  :git => "https://github.com/puppetlabs/puppetlabs-vcsrepo",
+  :ref => "0.2.0"
+
+# indirect dependencies
+
+mod "firewall",
+  :git => "https://github.com/puppetlabs/puppetlabs-firewall",
+  :ref => "master"
+
+mod "apt",
+  :git => "https://github.com/puppetlabs/puppetlabs-apt",
+  :ref => "1.4.x"
+
+mod "mongodb",
+  :git => "https://github.com/puppetlabs/puppetlabs-mongodb",
+  :ref => "0.10.0"
+
+mod "ntp",
+  :git => "https://github.com/puppetlabs/puppetlabs-ntp",
+  :ref => "3.0.x"
+
+mod "postgresql",
+  :git => "https://github.com/puppetlabs/puppetlabs-postgresql",
+  :ref => "3.3.x"
+
+mod "puppetdb",
+  :git => "https://github.com/puppetlabs/puppetlabs-puppetdb",
+  :ref => "4.0.0"
+
