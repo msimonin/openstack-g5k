@@ -3,6 +3,8 @@
 * ```juno_legacy_network``` : install ```juno``` version using a single flat network and the legacy service nova-network.
 * ```juno_neutron``` : install a full SDN stack (neutron), connectivity through GRE tunnels.
 Performance may be impacted (see [#8](https://github.com/msimonin/openstack-g5k/issues/8))
+* ```liberty_neutron``` : install a full SDN stack (neutron), connectivity through GRE tunnels.
+Performance may be impacted (see [#8](https://github.com/msimonin/openstack-g5k/issues/8))
 
 Directory layout :
 ```
@@ -43,7 +45,7 @@ $) ./deploy.sh
 
 ## Deploy on Grid'5000 (```grid'5000``` subdirectory - if any)
 
-
+* ```liberty_neutron``` requires 2 network interfaces (e.g paravance / parasilo / paranoia).
 * ```juno_neutron``` requires 2 network interfaces (e.g paravance / parasilo / paranoia).
 * ```juno_legacy_network``` require only one network interface (thus it should be useable anywhere on grid'5000)
 
