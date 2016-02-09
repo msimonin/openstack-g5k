@@ -1,3 +1,5 @@
+> This script is deprecated in favor of : https://github.com/grid5000/xp5k-openstack
+
 # Subdirectories information
 
 * ```juno_legacy_network``` : install ```juno``` version using a single flat network and the legacy service nova-network.
